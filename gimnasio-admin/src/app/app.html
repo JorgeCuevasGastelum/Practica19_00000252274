@@ -1,0 +1,49 @@
+<header class="barra">
+  <div class="barra__interior">
+    <span class="barra__marca">
+      <img src="/logo.svg" alt="" />
+      Gimnasio Titanes
+    </span>
+    <span class="barra__etiqueta">Panel</span>
+  </div>
+</header>
+
+<main class="pagina">
+  <section class="encabezado">
+    <div>
+      <h1>Tablero</h1>
+      <p>El catálogo de clases del gimnasio.</p>
+    </div>
+    <div class="acciones">
+      <button class="boton boton--secundario" (click)="vaciar()" [disabled]="total() === 0">
+        Vaciar catálogo
+      </button>
+      <button class="boton" (click)="restaurar()" [disabled]="total() > 0">Restaurar catálogo</button>
+    </div>
+  </section>
+
+  <!-- El resumen: los tres números salen de computed() en app.ts -->
+  <section class="resumen">
+    <div class="resumen__dato">
+      <span class="resumen__numero">{{ total() }}</span>
+      <span class="resumen__texto">clases en total</span>
+    </div>
+    <div class="resumen__dato">
+      <span class="resumen__numero">{{ minutosSemana() }}</span>
+      <span class="resumen__texto">minutos a la semana</span>
+    </div>
+    <div class="resumen__dato">
+      <span class="resumen__numero">{{ deUnaHora() }}</span>
+      <span class="resumen__texto">clases de una hora o más</span>
+    </div>
+  </section>
+
+  <!-- Una tarjeta por clase. track: Angular reconoce cada tarjeta por su id. -->
+  <div class="rejilla">
+    @for (clase of clases(); track clase.id) {
+      <app-tarjeta-clase [clase]="clase" />
+    } @empty {
+      <p class="vacio">No hay clases en el catálogo. Usa «Restaurar catálogo» para volver a cargarlas.</p>
+    }
+  </div>
+</main>
